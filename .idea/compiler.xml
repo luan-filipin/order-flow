@@ -11,6 +11,9 @@
         <module name="restaurante-service.test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="restaurante-service" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
