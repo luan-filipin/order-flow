@@ -1,13 +1,13 @@
-package com.orderflow.cozinha;
+package com.orderflow.cozinhaservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CozinhaApplication {
+public class CozinhaServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CozinhaApplication.class, args);
+        SpringApplication.run(CozinhaServiceApplication.class, args);
     }
 
 }

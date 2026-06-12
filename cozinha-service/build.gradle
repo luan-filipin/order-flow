@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.orderflow'
 version = '0.0.1-SNAPSHOT'
-description = 'cozinha'
+description = 'cozinha-service'
 
 java {
     toolchain {
