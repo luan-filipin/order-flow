@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GarcomServiceImplTest {
+class GarcomServiceImplTest {
 
     @Mock
     private GarcomRepository garcomRepository;
@@ -45,14 +44,14 @@ public class GarcomServiceImplTest {
     @Test
     void deveGerarPedido(){
         GarcomRequestDTO garcomRequestDTO = GarcomFixture.gerarPedidoDto(1, "Garcom 1");
-        Garcom garcom = GarcomFixture.gerarPedidoDomain("550e8400-e29b-41d4-a716-446655440000", 1, "Garcom 1", true, "item 1");
+        Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
         when(garcomRepository.save(any(Garcom.class))).thenReturn(garcom);
 
         GarcomResponseDTO resultado = garcomService.gerarPedido(garcomRequestDTO);
 
         assertThat(resultado).isNotNull();
-        assertThat(resultado.idPedido()).isEqualTo(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
+        assertThat(resultado.idPedido()).isEqualTo(1L);
         assertThat(resultado.numeroMesa()).isEqualTo(1);
 
         verify(garcomRepository).save(any(Garcom.class));
@@ -71,14 +70,14 @@ public class GarcomServiceImplTest {
 
     @Test
     void deveBuscarPedidoPeloNumeroMesa(){
-        Garcom garcom = GarcomFixture.gerarPedidoDomain("550e8400-e29b-41d4-a716-446655440000", 1, "Garcom 1", true, "item 1");
+        Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.of(garcom));
 
         GarcomResponseDTO resultado = garcomService.buscarPedidoPeloNumeroMesa(1);
 
         assertThat(resultado).isNotNull();
-        assertThat(resultado.idPedido()).isEqualTo(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
+        assertThat(resultado.idPedido()).isEqualTo(1L);
         assertThat(resultado.numeroMesa()).isEqualTo(1);
 
         verify(garcomRepository).findByNumeroMesa(1);
@@ -95,31 +94,31 @@ public class GarcomServiceImplTest {
 
     @Test
     void deveBuscarPedidoPeloId(){
-        Garcom garcom = GarcomFixture.gerarPedidoDomain("550e8400-e29b-41d4-a716-446655440000", 1, "Garcom 1", true, "item 1");
+        Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
-        when(garcomRepository.findByIdPedido(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"))).thenReturn(Optional.of(garcom));
+        when(garcomRepository.findByIdPedido(1L)).thenReturn(Optional.of(garcom));
 
-        GarcomResponseDTO resultado = garcomService.buscarPedidoPeloId(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
+        GarcomResponseDTO resultado = garcomService.buscarPedidoPeloId(1L);
 
         assertThat(resultado).isNotNull();
-        assertThat(resultado.idPedido()).isEqualTo(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
+        assertThat(resultado.idPedido()).isEqualTo(1L);
         assertThat(resultado.numeroMesa()).isEqualTo(1);
 
-        verify(garcomRepository).findByIdPedido(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
+        verify(garcomRepository).findByIdPedido(1L);
     }
 
     @Test
     void deveLancarErroSePedidoPeloIdNaoExistir(){
-        when(garcomRepository.findByIdPedido(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"))).thenReturn(Optional.empty());
+        when(garcomRepository.findByIdPedido(1L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> garcomService.buscarPedidoPeloId(UUID.fromString("550e8400-e29b-41d4-a716-446655440000")))
+        assertThatThrownBy(() -> garcomService.buscarPedidoPeloId(1L))
                 .isInstanceOf(OPedidoNaoExistePeloIdException.class)
-                .hasMessage("O pedido com o id: 550e8400-e29b-41d4-a716-446655440000 nao existe.");
+                .hasMessage("O pedido com o id: 1 nao existe.");
     }
 
     @Test
     void deveEncerrarPedido(){
-        Garcom garcom = GarcomFixture.gerarPedidoDomain("550e8400-e29b-41d4-a716-446655440000", 1, "Garcom 1", true, "item 1");
+        Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.of(garcom));
         when(garcomRepository.save(any(Garcom.class))).thenReturn(garcom);
@@ -144,7 +143,7 @@ public class GarcomServiceImplTest {
 
     @Test
     void deveLancarErroSePedidoJaEstaEncerrado(){
-        Garcom garcom = GarcomFixture.gerarPedidoDomain("550e8400-e29b-41d4-a716-446655440000", 1, "Garcom 1", false, "item 1");
+        Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", false, "item 1");
 
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.of(garcom));
 

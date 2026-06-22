@@ -9,8 +9,6 @@ import com.orderflow.garcomservice.repository.GarcomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Component
 public class GarcomValidator {
@@ -28,7 +26,7 @@ public class GarcomValidator {
                 .orElseThrow(() -> new OPedidoNaoExistePeloNumeroMesaException(numeroMesa));
     }
 
-    public Garcom buscaPedidoPeloIdOuLancaException(UUID idPedido){
+    public Garcom buscaPedidoPeloIdOuLancaException(Long idPedido){
         return garcomRepository.findByIdPedido(idPedido)
                 .orElseThrow(() -> new OPedidoNaoExistePeloIdException(idPedido));
     }

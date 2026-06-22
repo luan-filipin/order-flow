@@ -32,7 +32,7 @@ public class GarcomServiceImpl implements GarcomService {
     }
 
     @Override
-    public GarcomResponseDTO buscarPedidoPeloId(UUID idPedido) {
+    public GarcomResponseDTO buscarPedidoPeloId(Long idPedido) {
         Garcom garcom = garcomValidator.buscaPedidoPeloIdOuLancaException(idPedido);
         return GarcomResponseDTO.fromDomain(garcom);
     }

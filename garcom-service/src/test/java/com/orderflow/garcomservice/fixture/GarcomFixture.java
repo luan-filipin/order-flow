@@ -4,11 +4,10 @@ import com.orderflow.garcomservice.domain.Garcom;
 import com.orderflow.garcomservice.dto.request.GarcomRequestDTO;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class GarcomFixture {
 
-    public static GarcomRequestDTO gerarPedidoDto(Integer numeroMesa, String nomeGarcom){
+    public static GarcomRequestDTO gerarPedidoDto(Integer numeroMesa, String nomeGarcom) {
         return new GarcomRequestDTO(
                 numeroMesa,
                 nomeGarcom,
@@ -16,13 +15,13 @@ public class GarcomFixture {
     }
 
     public static Garcom gerarPedidoDomain(
-            String idPedido,
+            Long idPedido,
             Integer numeroMesa,
             String nomeGarcom,
             boolean status,
-            String itemsPedido){
+            String itemsPedido) {
         return new Garcom(
-                UUID.fromString(idPedido),
+                idPedido,
                 numeroMesa,
                 nomeGarcom,
                 status,

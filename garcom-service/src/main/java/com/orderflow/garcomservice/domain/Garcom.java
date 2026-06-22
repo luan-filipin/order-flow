@@ -1,13 +1,10 @@
 package com.orderflow.garcomservice.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +15,10 @@ import java.util.UUID;
 @Table(name = "garcom")
 public class Garcom {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido", nullable = false)
-    private UUID idPedido;
+    private Long idPedido;
 
     @Column(name = "numero_mesa", nullable = false, unique = true)
     private Integer numeroMesa;
