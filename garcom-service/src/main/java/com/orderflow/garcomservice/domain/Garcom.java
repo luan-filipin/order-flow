@@ -27,6 +27,7 @@ public class Garcom {
     @Column(name = "nome_garcom", nullable = false)
     private String nomeGarcom;
 
+    @Builder.Default
     @Column(name = "status", nullable = false)
     private boolean status = true;
 
