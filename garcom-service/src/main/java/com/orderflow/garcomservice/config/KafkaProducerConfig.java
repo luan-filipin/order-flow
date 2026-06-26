@@ -1,4 +1,4 @@
-package com.orderflow.garcomservice.producer;
+package com.orderflow.garcomservice.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
