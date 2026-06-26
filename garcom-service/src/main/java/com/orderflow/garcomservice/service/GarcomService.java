@@ -9,7 +9,5 @@ public interface GarcomService {
 
     GarcomResponseDTO buscarPedidoPeloNumeroMesa(Integer numeroMesa);
 
-    GarcomResponseDTO buscarPedidoPeloId(Long idPedido);
-
     GarcomResponseDTO encerraPedido(Integer numeroMesa);
 }

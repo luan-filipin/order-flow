@@ -9,8 +9,6 @@ import com.orderflow.garcomservice.service.validation.GarcomValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Service
 public class GarcomServiceImpl implements GarcomService {
@@ -28,12 +26,6 @@ public class GarcomServiceImpl implements GarcomService {
     @Override
     public GarcomResponseDTO buscarPedidoPeloNumeroMesa(Integer numeroMesa) {
         Garcom garcom = garcomValidator.buscaPedidoPeloNumeroMesaOuLancaExcecao(numeroMesa);
-        return GarcomResponseDTO.fromDomain(garcom);
-    }
-
-    @Override
-    public GarcomResponseDTO buscarPedidoPeloId(Long idPedido) {
-        Garcom garcom = garcomValidator.buscaPedidoPeloIdOuLancaException(idPedido);
         return GarcomResponseDTO.fromDomain(garcom);
     }
 

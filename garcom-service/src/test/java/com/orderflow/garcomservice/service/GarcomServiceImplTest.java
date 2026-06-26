@@ -5,7 +5,6 @@ import com.orderflow.garcomservice.dto.request.GarcomRequestDTO;
 import com.orderflow.garcomservice.dto.response.GarcomResponseDTO;
 import com.orderflow.garcomservice.exception.MesaJaEstaSendoAtendidaException;
 import com.orderflow.garcomservice.exception.OPedidoJaEstaEncerrado;
-import com.orderflow.garcomservice.exception.OPedidoNaoExistePeloIdException;
 import com.orderflow.garcomservice.exception.OPedidoNaoExistePeloNumeroMesaException;
 import com.orderflow.garcomservice.fixture.GarcomFixture;
 import com.orderflow.garcomservice.repository.GarcomRepository;
@@ -21,7 +20,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,7 +40,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveGerarPedido(){
+    void deveGerarPedido() {
         GarcomRequestDTO garcomRequestDTO = GarcomFixture.gerarPedidoDto(1, "Garcom 1");
         Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
@@ -59,7 +57,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveLancarErroSeMesaJaEstiverSendoAtendida(){
+    void deveLancarErroSeMesaJaEstiverSendoAtendida() {
         GarcomRequestDTO garcomRequestDTO = GarcomFixture.gerarPedidoDto(1, "Garcom 1");
 
         when(garcomRepository.existsByNumeroMesaAndStatusTrue(1)).thenReturn(true);
@@ -69,7 +67,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveBuscarPedidoPeloNumeroMesa(){
+    void deveBuscarPedidoPeloNumeroMesa() {
         Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.of(garcom));
@@ -84,7 +82,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveLancarErroSePedidoPeloNumeroMesaNaoExistir(){
+    void deveLancarErroSePedidoPeloNumeroMesaNaoExistir() {
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> garcomService.buscarPedidoPeloNumeroMesa(1))
@@ -93,31 +91,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveBuscarPedidoPeloId(){
-        Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
-
-        when(garcomRepository.findByIdPedido(1L)).thenReturn(Optional.of(garcom));
-
-        GarcomResponseDTO resultado = garcomService.buscarPedidoPeloId(1L);
-
-        assertThat(resultado).isNotNull();
-        assertThat(resultado.idPedido()).isEqualTo(1L);
-        assertThat(resultado.numeroMesa()).isEqualTo(1);
-
-        verify(garcomRepository).findByIdPedido(1L);
-    }
-
-    @Test
-    void deveLancarErroSePedidoPeloIdNaoExistir(){
-        when(garcomRepository.findByIdPedido(1L)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> garcomService.buscarPedidoPeloId(1L))
-                .isInstanceOf(OPedidoNaoExistePeloIdException.class)
-                .hasMessage("O pedido com o id: 1 nao existe.");
-    }
-
-    @Test
-    void deveEncerrarPedido(){
+    void deveEncerrarPedido() {
         Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.of(garcom));
@@ -133,7 +107,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveLancarErroSePedidoNaoExistirParaEncerrar(){
+    void deveLancarErroSePedidoNaoExistirParaEncerrar() {
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> garcomService.encerraPedido(1))
@@ -142,7 +116,7 @@ class GarcomServiceImplTest {
     }
 
     @Test
-    void deveLancarErroSePedidoJaEstaEncerrado(){
+    void deveLancarErroSePedidoJaEstaEncerrado() {
         Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", false, "item 1");
 
         when(garcomRepository.findByNumeroMesa(1)).thenReturn(Optional.of(garcom));

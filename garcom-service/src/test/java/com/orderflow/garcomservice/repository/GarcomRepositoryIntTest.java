@@ -43,17 +43,4 @@ class GarcomRepositoryIntTest {
         Optional<Garcom> garcom = garcomRepository.findByNumeroMesa(99);
         assertThat(garcom).isEmpty();
     }
-
-    @Test
-    void deveBuscarPedidoPeloId() {
-        Optional<Garcom> garcom = garcomRepository.findByIdPedido(1L);
-        assertThat(garcom).isPresent();
-        assertThat(garcom.get().getIdPedido()).isEqualTo(1L);
-    }
-
-    @Test
-    void deveRetornarVazioQuandoPedidoNaoExistirPeloID() {
-        Optional<Garcom> garcom = garcomRepository.findByIdPedido(99L);
-        assertThat(garcom).isEmpty();
-    }
 }
