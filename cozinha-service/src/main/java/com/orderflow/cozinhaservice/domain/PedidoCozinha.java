@@ -2,10 +2,7 @@ package com.orderflow.cozinhaservice.domain;
 
 import com.orderflow.cozinhaservice.domain.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -15,16 +12,17 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "cozinha")
-public class Cozinha {
+@Table(name = "pedido_cozinha")
+public class PedidoCozinha {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "id_pedido", nullable = false)
-    private UUID idPedido;
+    private Long idPedido;
 
     @Column(name = "numero_mesa", nullable = false)
     private Integer numeroMesa;
