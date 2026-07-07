@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: cozinha-service
@@ -12,3 +15,23 @@ spring:
 
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: cozinha-service-pedido-criado
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.orderflow.cozinhaservice.dto.event
+        spring.json.value.default.type: com.orderflow.cozinhaservice.dto.event.consumer.PedidoRecebidoEvent
+        spring.json.use.type.headers: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+
+
+kafka:
+  topic:
+    pedido-criado: pedido-criado
+    pedido-finalizado: pedido-finalizado

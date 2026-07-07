@@ -5,6 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/changes/create-table-garcom.xml"/>
+    <include file="db/changes/create-table-garcom.xml"/>
+    <include file="db/changes/create-table-outbox-event.xml"/>
 
 </databaseChangeLog>

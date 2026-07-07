@@ -15,9 +15,13 @@
       <module name="cozinha" target="21" />
       <module name="cozinha-service_main" target="21" />
       <module name="cozinha-service_test" target="21" />
+      <module name="cozinha.main" target="21" />
+      <module name="cozinha.test" target="21" />
       <module name="garcom-service_main" target="21" />
       <module name="garcom-service_test" target="21" />
       <module name="restaurante-service" target="21" />
+      <module name="restaurante-service.main" target="21" />
+      <module name="restaurante-service.test" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

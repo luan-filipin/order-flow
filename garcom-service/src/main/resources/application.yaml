@@ -12,3 +12,13 @@ spring:
 
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+
+kafka:
+  topic:
+    pedido-criado: pedido-criado
