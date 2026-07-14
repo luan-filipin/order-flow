@@ -5,10 +5,11 @@ import com.orderflow.cozinhaservice.outbox.domain.enums.StatusEvent;
 import com.orderflow.cozinhaservice.outbox.event.OutboxCreatedEvent;
 import com.orderflow.cozinhaservice.outbox.repository.OutboxEventRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class OutboxCreatedEventListener {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Async
-    @EventListener
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void ouveOutboxCreatedEvent(OutboxCreatedEvent event) {
         OutboxEvent outbox = outboxEventRepository.findById(event.getOutboxId())
                 .orElseThrow(() -> new RuntimeException("Outbox not found"));

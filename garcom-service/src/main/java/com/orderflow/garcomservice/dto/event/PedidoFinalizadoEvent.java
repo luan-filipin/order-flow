@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public record PedidoFinalizadoEvent(
         Long idPedido,
+        Integer numeroMesa,
         Status status,
         LocalDateTime dataFimPreparo
 ) {

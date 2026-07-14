@@ -11,11 +11,11 @@ import com.orderflow.garcomservice.outbox.repository.OutboxEventRepository;
 import com.orderflow.garcomservice.repository.GarcomRepository;
 import com.orderflow.garcomservice.service.GarcomService;
 import com.orderflow.garcomservice.service.validation.GarcomValidator;
+import com.orderflow.garcomservice.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import util.JsonUtil;
 
 @RequiredArgsConstructor
 @Service

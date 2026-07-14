@@ -18,7 +18,16 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+    consumer:
+      group-id: garcom-service-pedido-finalizado
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.orderflow.garcomservice.dto.event
+        spring.json.value.default.type: com.orderflow.garcomservice.dto.event.consumer.PedidoFinalizadEvent
+        spring.json.use.type.headers: false
 
 kafka:
   topic:
     pedido-criado: pedido-criado
+    pedido-finalizado: pedido-finalizado

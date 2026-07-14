@@ -1,4 +1,4 @@
-package util;
+package com.orderflow.garcomservice.util;
 
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
