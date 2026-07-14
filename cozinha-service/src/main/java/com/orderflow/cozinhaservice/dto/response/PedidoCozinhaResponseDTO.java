@@ -9,6 +9,7 @@ import java.util.UUID;
 public record PedidoCozinhaResponseDTO(
         UUID id,
         Long idPedido,
+        Integer numeroMesa,
         Status status,
         LocalDateTime dataRecebimento,
         LocalDateTime dataFimPreparo
@@ -17,6 +18,7 @@ public record PedidoCozinhaResponseDTO(
         return new PedidoCozinhaResponseDTO(
                 pedidoCozinha.getId(),
                 pedidoCozinha.getIdPedido(),
+                pedidoCozinha.getNumeroMesa(),
                 pedidoCozinha.getStatus(),
                 pedidoCozinha.getDataRecebimento(),
                 pedidoCozinha.getDataFimPreparo()

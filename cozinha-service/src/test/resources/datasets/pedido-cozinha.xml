@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <pedido_cozinha id="11111111-1111-1111-1111-111111111111"
+                    id_pedido="1"
+                    numero_mesa="1"
+                    items_pedido="item 1"
+                    status="RECEBIDO"
+                    data_recebimento="2026-03-08 01:01:01"
+                    data_fim_preparo="[null]"/>
+
+    <pedido_cozinha id="22222222-2222-2222-2222-222222222222"
+                    id_pedido="2"
+                    numero_mesa="2"
+                    items_pedido="item 2"
+                    status="PRONTO"
+                    data_recebimento="2026-03-08 01:01:01"
+                    data_fim_preparo="2026-03-08 01:10:01"/>
+</dataset>

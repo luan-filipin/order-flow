@@ -8,7 +8,7 @@
     <changeSet id="002" author="luan">
         <createTable tableName="outbox_event">
 
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
@@ -20,7 +20,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="payload" type="VARCHAR(50)">
+            <column name="payload" type="TEXT">
                 <constraints nullable="false"/>
             </column>
 

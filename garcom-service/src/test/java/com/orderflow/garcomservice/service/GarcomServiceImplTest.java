@@ -7,14 +7,20 @@ import com.orderflow.garcomservice.exception.MesaJaEstaSendoAtendidaException;
 import com.orderflow.garcomservice.exception.OPedidoJaEstaEncerrado;
 import com.orderflow.garcomservice.exception.OPedidoNaoExistePeloNumeroMesaException;
 import com.orderflow.garcomservice.fixture.GarcomFixture;
+import com.orderflow.garcomservice.outbox.domain.OutboxEvent;
+import com.orderflow.garcomservice.outbox.event.OutboxCreatedEvent;
+import com.orderflow.garcomservice.outbox.repository.OutboxEventRepository;
 import com.orderflow.garcomservice.repository.GarcomRepository;
 import com.orderflow.garcomservice.service.impl.GarcomServiceImpl;
 import com.orderflow.garcomservice.service.validation.GarcomValidator;
+import com.orderflow.garcomservice.util.JsonUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 
@@ -30,13 +36,21 @@ class GarcomServiceImplTest {
     @Mock
     private GarcomRepository garcomRepository;
 
+    @Mock
+    private OutboxEventRepository outboxEventRepository;
+
+    private CapturingApplicationEventPublisher publisher;
+    private JsonUtil jsonUtil;
+
     private GarcomService garcomService;
 
 
     @BeforeEach
     void setUp() {
         GarcomValidator garcomValidator = new GarcomValidator(garcomRepository);
-        garcomService = new GarcomServiceImpl(garcomRepository, garcomValidator);
+        publisher = new CapturingApplicationEventPublisher();
+        jsonUtil = new JsonUtil(new ObjectMapper());
+        garcomService = new GarcomServiceImpl(garcomRepository, garcomValidator, outboxEventRepository, publisher, jsonUtil);
     }
 
     @Test
@@ -45,6 +59,11 @@ class GarcomServiceImplTest {
         Garcom garcom = GarcomFixture.gerarPedidoDomain(1L, 1, "Garcom 1", true, "item 1");
 
         when(garcomRepository.save(any(Garcom.class))).thenReturn(garcom);
+        when(outboxEventRepository.save(any(OutboxEvent.class))).thenAnswer(invocation -> {
+            OutboxEvent outbox = invocation.getArgument(0);
+            outbox.setId(10L);
+            return outbox;
+        });
 
         GarcomResponseDTO resultado = garcomService.gerarPedido(garcomRequestDTO);
 
@@ -54,6 +73,22 @@ class GarcomServiceImplTest {
 
         verify(garcomRepository).save(any(Garcom.class));
         verify(garcomRepository).existsByNumeroMesaAndStatusTrue(1);
+        verify(outboxEventRepository).save(any(OutboxEvent.class));
+        assertThat(publisher.event()).isInstanceOf(OutboxCreatedEvent.class);
+    }
+
+    private static class CapturingApplicationEventPublisher implements ApplicationEventPublisher {
+
+        private Object event;
+
+        @Override
+        public void publishEvent(Object event) {
+            this.event = event;
+        }
+
+        Object event() {
+            return event;
+        }
     }
 
     @Test
